@@ -1,25 +1,24 @@
-//
-// Created by lyaho on 01.12.2022.
-//
+//Liakhov Artem
 
 #ifndef MATRIX_ARRAY_H
 #define MATRIX_ARRAY_H
 #include <iostream>
 
-typedef unsigned int uint;
 
 template<class T>
 class array {
 private:
-    T* start;
+    T* data_;
+    size_t allocated_;
+    size_t size_;
 public:
     array();
-    array(std::initializer_list<T>);
+    array(std::initializer_list<T> lst);
     ~array();
     void push_back(T value);
     void front();
     T &operator[](int i);
-    uint size();
+    size_t size();
 };
 
 #include "array.cpp"
