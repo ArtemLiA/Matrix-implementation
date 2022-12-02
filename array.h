@@ -14,11 +14,15 @@ private:
 public:
     array();
     array(std::initializer_list<T> lst);
-    ~array();
+    ~array() noexcept;
     void push_back(T value);
-    void front();
-    T &operator[](int i);
+    void insert(T value);
+    T front();
+    T back();
+    bool empty();
     size_t size();
+    size_t capacity();
+    T &operator[](int i);
 };
 
 #include "array.cpp"

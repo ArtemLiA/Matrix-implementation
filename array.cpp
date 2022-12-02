@@ -19,9 +19,10 @@ array<T>::array(std::initializer_list<T> lst) {
     size_ = 0;
     allocated_ = 0;
     for (auto val:lst){
-        allocated_ += 1;
+        allocated_++;
     };
     data_ = new T[allocated_ + 10];
+    allocated_ += 10;
     for (auto val:lst){
         this->push_back(val);
     }
@@ -35,20 +36,32 @@ void array<T>::push_back(T value) {
         return;
     }
     T* new_array = nullptr;
-    new_array = new T[allocated_ + 10];
+    new_array = new T[2*allocated_ + 1];
     for (size_t i = 0; i < size_; i++){
-        new_array[i] = data_[i];
+        try{
+            new_array[i] = data_[i];
+        }
+        catch(...){
+            delete new_array;
+            throw;
+        }
     }
-    new_array[size_] = value;
+    try{
+        new_array[size_] = value;
+    }
+    catch(...){
+        delete new_array;
+        throw;
+    }
     T* temp = data_;
     data_ = new_array;
-    allocated_ += 10;
+    allocated_ += allocated_ + 1;
     size_++;
     delete temp;
 }
 
 template<class T>
-array<T>::~array() {
+array<T>::~array() noexcept{
     allocated_ = 0;
     size_ = 0;
     delete data_;
@@ -64,7 +77,7 @@ template<class T>
 T& array<T>::operator[](int i) {
     int error_code = 0;
     if (i < 0 || i >= size_){
-        throw 1;
+        throw;
     }
     return data_[i];
 }
