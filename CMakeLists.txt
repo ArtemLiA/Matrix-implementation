@@ -3,4 +3,4 @@ project(Matrix)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Matrix main.cpp array.cpp array.h)
+add_executable(Matrix main.cpp Exceptions.cpp Array.cpp Array.h)
