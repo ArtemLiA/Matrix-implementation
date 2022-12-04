@@ -44,9 +44,16 @@ template<class T>Array<T>::~Array() noexcept{
 }
 
 template<class T>void Array<T>::resize(size_t n_sz){
+    if (n_sz < size_){
+        size_ = n_sz;
+        return;
+    }
+    if (allocated_ >= n_sz){
+        return;
+    }
     T* new_data_ = new T[n_sz + 10];
     try{
-        for (size_t idx = 0; idx < n_sz && idx < size_; idx++){
+        for (size_t idx = 0; idx < size_; idx++){
             new_data_[idx] = data_[idx];
         }
     }
@@ -57,10 +64,6 @@ template<class T>void Array<T>::resize(size_t n_sz){
     delete [] data_;
     data_ = new_data_;
     allocated_ = n_sz + 10;
-    if (n_sz < size_){
-        size_ = n_sz;
-        return;
-    }
 }
 
 template<class T> void Array<T>::push_back(T val){

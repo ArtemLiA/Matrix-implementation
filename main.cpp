@@ -10,14 +10,8 @@
 int main(){
     Array<int> my_arr = {1, -2, 3, 7, 8};
     std::cout << my_arr.capacity() << std::endl;
-    std::cout << my_arr.size() << std::endl;
     my_arr.resize(2);
-    std::cout << my_arr.capacity() << std::endl;
-    std::cout << my_arr.size() << std::endl;
-    my_arr.push_back(99);
     std::cout << my_arr << std::endl;
     std::cout << my_arr.capacity() << std::endl;
-    std::cout << my_arr.size() << std::endl;
-    std::cout << my_arr;
     return 0;
 }
