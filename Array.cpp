@@ -31,7 +31,7 @@ template<class T> Array<T>::Array(std::initializer_list<T> list) {
     }
 }
 
-template<class T> T Array<T>::at(int idx) {
+template<class T> T Array<T>::at(int idx) const {
     if (idx < 0 || idx >= size_){
         throw std::out_of_range("Array construct error");
     }
@@ -39,8 +39,9 @@ template<class T> T Array<T>::at(int idx) {
 }
 
 
-template<class T>Array<T>::~Array() noexcept{
+template<class T>Array<T>::~Array(){
     delete [] data_;
+    data_ = nullptr;
 }
 
 template<class T>void Array<T>::resize(size_t n_sz){
@@ -105,6 +106,21 @@ size_t Array<T>::capacity() {
     return allocated_;
 }
 
+template<class T>
+Array<T>::Array(const Array<T> &other){
+    data_ = new T[other.allocated_];
+    allocated_ = other.allocated_;
+    try{
+        for (size_t i = 0; i < other.size_; i++){
+            data_[i] = other.at(i);
+        }
+    }
+    catch(...){
+        delete data_;
+        throw;
+    }
+    size_ = other.size_;
+}
 
 
 #endif //MATRIX_ARRAY_CPP
