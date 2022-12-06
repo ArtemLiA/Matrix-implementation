@@ -97,12 +97,12 @@ std::ostream& operator<<(std::ostream& os, const Array<T>& arr){
 }
 
 template<class T>
-size_t Array<T>::size() {
+size_t Array<T>::size() const{
     return size_;
 }
 
 template<class T>
-size_t Array<T>::capacity() {
+size_t Array<T>::capacity() const{
     return allocated_;
 }
 

@@ -18,8 +18,8 @@ public:
     void push_back(T val);
     void resize(size_t n_sz);
     T& operator[](int idx);
-    size_t capacity();
-    size_t size();
+    size_t capacity() const;
+    size_t size() const;
     Array& operator=(const Array<T>& other);
 protected:
     T* data_;
