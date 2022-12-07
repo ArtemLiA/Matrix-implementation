@@ -5,6 +5,7 @@
 #define MATRIX_ARRAY_CPP
 #include "Array.h"
 
+//Constructors and destructor
 template<class T> Array<T>::Array(size_t sz) {
     data_ = new T[sz + 10];
     allocated_ = sz + 10;
@@ -31,6 +32,33 @@ template<class T> Array<T>::Array(std::initializer_list<T> list) {
     }
 }
 
+template<class T>
+Array<T>::Array(const Array<T> &other){
+    data_ = new T[other.allocated_];
+    allocated_ = other.allocated_;
+    try{
+        for (size_t i = 0; i < other.size_; i++){
+            data_[i] = other.at(i);
+        }
+    }
+    catch(...){
+        delete [] data_;
+        throw;
+    }
+    size_ = other.size_;
+}
+
+template<class T>Array<T>::~Array(){
+    delete [] data_;
+    data_ = nullptr;
+}
+
+//Const methods
+template<class T>
+size_t Array<T>::capacity() const{
+    return allocated_;
+}
+
 template<class T> T Array<T>::at(int idx) const {
     if (idx < 0 || idx >= size_){
         throw std::out_of_range("Array construct error");
@@ -38,10 +66,22 @@ template<class T> T Array<T>::at(int idx) const {
     return data_[idx];
 }
 
+template<class T>
+size_t Array<T>::size() const{
+    return size_;
+}
 
-template<class T>Array<T>::~Array(){
-    delete [] data_;
-    data_ = nullptr;
+//Not const methods
+template<class T> void Array<T>::push_back(T val){
+    if (size_ < allocated_){
+        data_[size_] = val;
+        size_++;
+        return;
+    }
+    //Case size_ == allocated_
+    this->resize(size_ + 1);
+    data_[size_] = val;
+    size_++;
 }
 
 template<class T>void Array<T>::resize(size_t n_sz){
@@ -67,26 +107,35 @@ template<class T>void Array<T>::resize(size_t n_sz){
     allocated_ = n_sz + 10;
 }
 
-template<class T> void Array<T>::push_back(T val){
-    if (size_ < allocated_){
-        data_[size_] = val;
-        size_++;
-        return;
-        //В случае исключения здесь состояние объекта не изменится -> всё ок.
-    }
-    //Case size_ == allocated_
-    this->resize(size_ + 1); //Если здесь вылетело исключение, то исходный объект не изменится
-    data_[size_] = val; //Если здесь вылетает исключение, то всё в порядке. (выделенной памяти станет больше)
-    size_++;
-}
-
+//Operators overloading
 template<class T>T& Array<T>::operator[](int idx) {
     if (idx < 0 || idx >= size_){
         throw std::out_of_range("index outside array");
     }
-    return data_[idx]; //С исключениями всё ок
+    return data_[idx];
 }
 
+template<class T> Array<T>& Array<T>::operator=(const Array<T> &other) {
+    if (this == &other){
+        return *this;
+    }
+    T* new_data = new T[other.allocated_];
+    try{
+        for (size_t idx = 0; idx < other.size_; idx++){
+            new_data[idx] = other.at(idx);
+        }
+    }
+    catch(...){
+        delete [] new_data;
+        throw;
+    }
+    delete [] data_; //Avoid memory leaks
+    data_ = new_data;
+    size_ = other.size_;
+    allocated_ = other.allocated_;
+}
+
+//Friend operators overloading
 template<class T>
 std::ostream& operator<<(std::ostream& os, const Array<T>& arr){
     os << " ";
@@ -96,31 +145,7 @@ std::ostream& operator<<(std::ostream& os, const Array<T>& arr){
     return os;
 }
 
-template<class T>
-size_t Array<T>::size() const{
-    return size_;
-}
 
-template<class T>
-size_t Array<T>::capacity() const{
-    return allocated_;
-}
-
-template<class T>
-Array<T>::Array(const Array<T> &other){
-    data_ = new T[other.allocated_];
-    allocated_ = other.allocated_;
-    try{
-        for (size_t i = 0; i < other.size_; i++){
-            data_[i] = other.at(i);
-        }
-    }
-    catch(...){
-        delete data_;
-        throw;
-    }
-    size_ = other.size_;
-}
 
 
 #endif //MATRIX_ARRAY_CPP
