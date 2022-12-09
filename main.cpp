@@ -9,20 +9,19 @@
 #include <vector>
 
 int main(){
-    Array<int> my_arr = {1, -2, 3, 7, 8};
-    std::cout << my_arr.capacity() << std::endl;
-    for (int i = 0; i < 11; i++){
-        my_arr.push_back(2*i + 1);
+    Matrix<int> MyMatrix(3, 3, 12);
+    for (int i = 0; i < 3; i++){
+        std::cout << MyMatrix.mat_[i] << std::endl;
     }
-    std::cout << my_arr << std::endl;
-    std::cout << my_arr.capacity() << std::endl;
-
-    Array<int> new_arr(std::move(my_arr));
-    std::cout << "new_arr:"<< new_arr.size() << std::endl;
-    std::cout << "my_arr:" << my_arr.size() << std::endl;
-    my_arr.push_back(156);
-    std::cout << my_arr << std::endl;
-    std::cout << my_arr.capacity() << std::endl;
-    std::cout << my_arr.size() << std::endl;
+    Matrix<int> NewMatrix = MyMatrix;
+    NewMatrix.mat_[0][0] = 19;
+    std::cout << "NewMatrix" << std::endl;
+    for (int i = 0; i < 3; i++){
+        std::cout << NewMatrix.mat_[i] << std::endl;
+    }
+    std::cout << "MyMatrix" << std::endl;
+    for (int i = 0; i < 3; i++){
+        std::cout << MyMatrix.mat_[i] << std::endl;
+    }
     return 0;
 }

@@ -11,6 +11,7 @@ template<class T> Array<T>::Array(size_t sz) {
     allocated_ = sz + 10;
 }
 
+
 template<class T> Array<T>::Array(std::initializer_list<T> list) {
     size_t idx = 0;
     for (auto val: list){

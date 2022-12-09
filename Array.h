@@ -13,6 +13,7 @@ template<class T> class Array {
 public:
     //Constructors and destructor
     explicit Array(size_t sz = 0);
+    Array(size_t sz, T elem);
     Array(std::initializer_list<T> list);
     Array(const Array<T>& other);
     Array(Array<T>&& other) noexcept;
