@@ -15,6 +15,7 @@ public:
     explicit Array(size_t sz = 0);
     Array(std::initializer_list<T> list);
     Array(const Array<T>& other);
+    Array(Array<T>&& other) noexcept;
     ~Array();
 
     //Const methods

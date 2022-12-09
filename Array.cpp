@@ -48,6 +48,16 @@ Array<T>::Array(const Array<T> &other){
     size_ = other.size_;
 }
 
+template<class T>
+Array<T>::Array(Array<T> &&other) noexcept{
+    data_ = other.data_;
+    size_ = other.size_;
+    allocated_ = other.allocated_;
+    other.data_ = nullptr;
+    other.size_ = 0;
+    other.allocated_ = 0;
+}
+
 template<class T>Array<T>::~Array(){
     delete [] data_;
     data_ = nullptr;

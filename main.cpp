@@ -17,9 +17,12 @@ int main(){
     std::cout << my_arr << std::endl;
     std::cout << my_arr.capacity() << std::endl;
 
-    Array<int> new_arr(my_arr);
-    new_arr[5] = 999;
-    std::cout << new_arr << std::endl;
+    Array<int> new_arr(std::move(my_arr));
+    std::cout << "new_arr:"<< new_arr.size() << std::endl;
+    std::cout << "my_arr:" << my_arr.size() << std::endl;
+    my_arr.push_back(156);
     std::cout << my_arr << std::endl;
+    std::cout << my_arr.capacity() << std::endl;
+    std::cout << my_arr.size() << std::endl;
     return 0;
 }
