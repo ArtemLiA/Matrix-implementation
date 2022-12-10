@@ -32,7 +32,7 @@ public:
     Array& operator=(const Array<T>& other);
     Array& operator=(Array<T>&& other) noexcept;
 protected:
-    T* data_;
+    T* data_ = nullptr;
     size_t allocated_, size_ = 0;
 };
 

@@ -51,6 +51,7 @@ Array<T>::Array(const Array<T> &other){
 
 template<class T>
 Array<T>::Array(Array<T> &&other) noexcept{
+    delete [] data_;
     data_ = other.data_;
     size_ = other.size_;
     allocated_ = other.allocated_;
@@ -151,6 +152,7 @@ Array<T>& Array<T>::operator=(Array<T> &&other) noexcept{
     if (this == &other){
         return *this;
     }
+    delete [] data_;
     data_ = other.data_;
     allocated_ = other.allocated_;
     size_ = other.size_;
