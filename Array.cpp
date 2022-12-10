@@ -156,6 +156,7 @@ template<class T> Array<T>& Array<T>::operator=(const Array<T> &other) {
     data_ = new_data;
     size_ = other.size_;
     allocated_ = other.allocated_;
+    return *this;
 }
 
 template<class T>
