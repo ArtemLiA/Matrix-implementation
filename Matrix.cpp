@@ -27,13 +27,14 @@ Matrix<T>::Matrix(const Matrix<T> &other) {
     columns_ = other.columns_;
 }
 
-
-
-
-
-
-//template<typename T>
-//Matrix<T>::Matrix(std::initializer_list<>) {}
+template<class T>
+Matrix<T>::Matrix(Matrix<T> &&other) noexcept {
+    mat_ = std::move(other.mat_);
+    rows_ = other.rows_;
+    columns_ = other.columns_;
+    other.rows_ = 0;
+    other.columns_ = 0;
+}
 
 
 #endif

@@ -14,7 +14,7 @@ public:
 public:
     explicit Matrix(size_t m_rows, size_t n_col, T elems = T());
     Matrix(const Matrix<T>& other);
-    Matrix(Matrix<T>&& other);
+    Matrix(Matrix<T>&& other) noexcept;
 };
 
 #include "Matrix.cpp"
