@@ -39,6 +39,7 @@ Array<T>::Array(const Array<T> &other){
         data_ = nullptr;
         allocated_ = 0;
         size_ = 0;
+        return;
     }
     data_ = new T[other.allocated_];
     allocated_ = other.allocated_;
