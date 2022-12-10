@@ -7,6 +7,8 @@
 #include "Array.h"
 template<class T>
 class Matrix {
+    template<class U>
+    friend std::ostream& operator<<(std::ostream& os, const Matrix<U>& arr);
 public:
     Array<Array<T>> mat_;
     size_t rows_;

@@ -1,6 +1,4 @@
-//
-// Created by lyaho on 05.12.2022.
-//
+//Liakhov Artem
 
 #ifndef MATRIX_MATRIX_CPP
 #define MATRIX_MATRIX_CPP
@@ -34,6 +32,14 @@ Matrix<T>::Matrix(Matrix<T> &&other) noexcept {
     columns_ = other.columns_;
     other.rows_ = 0;
     other.columns_ = 0;
+}
+
+template<class U>
+std::ostream& operator<<(std::ostream& os, const Matrix<U>& arr){
+    for (size_t i = 0; i < arr.rows_; i++){
+        os << arr.mat_.at(i) << std::endl;
+    }
+    return os;
 }
 
 
