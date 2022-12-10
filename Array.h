@@ -12,7 +12,7 @@ template<class T> class Array {
     friend std::ostream& operator<<(std::ostream& os, const Array<U>& arr);
 public:
     //Constructors and destructor
-    explicit Array(size_t sz = 0);
+    explicit Array(size_t alloc = 0);
     Array(std::initializer_list<T> list);
     Array(const Array<T>& other);
     Array(Array<T>&& other) noexcept;

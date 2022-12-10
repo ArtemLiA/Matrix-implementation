@@ -6,9 +6,9 @@
 #include "Array.h"
 
 //Constructors and destructor
-template<class T> Array<T>::Array(size_t sz) {
-    data_ = new T[sz + 10];
-    allocated_ = sz + 10;
+template<class T> Array<T>::Array(size_t alloc) {
+    data_ = new T[alloc + 10];
+    allocated_ = alloc + 10;
 }
 
 
@@ -35,6 +35,11 @@ template<class T> Array<T>::Array(std::initializer_list<T> list) {
 
 template<class T>
 Array<T>::Array(const Array<T> &other){
+    if (other.data_ == nullptr){
+        data_ = nullptr;
+        allocated_ = 0;
+        size_ = 0;
+    }
     data_ = new T[other.allocated_];
     allocated_ = other.allocated_;
     try{
@@ -129,6 +134,12 @@ template<class T>T& Array<T>::operator[](int idx) {
 
 template<class T> Array<T>& Array<T>::operator=(const Array<T> &other) {
     if (this == &other){
+        return *this;
+    }
+    if (other.data_ == nullptr){
+        data_ = nullptr;
+        size_ = 0;
+        allocated_ = 0;
         return *this;
     }
     T* new_data = new T[other.allocated_];
