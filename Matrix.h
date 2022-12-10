@@ -14,7 +14,7 @@ public:
     size_t rows_;
     size_t columns_;
 public:
-    explicit Matrix(size_t m_rows, size_t n_col, T elems = T());
+    explicit Matrix(size_t m_rows, size_t n_col = 1, T elems = T());
     Matrix(const Matrix<T>& other);
     Matrix(Matrix<T>&& other) noexcept;
 };

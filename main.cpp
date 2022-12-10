@@ -9,11 +9,9 @@
 #include <vector>
 
 int main(){
-    Array<int> arr1 = {1, 2, 2, 3};
-    Array<int> arr2 = std::move(arr1);
-    Array<int> arr3(arr1);
-    std::cout << "arr1: " << arr1 << std::endl;
-    std::cout << "arr2: " << arr2 << std::endl;
-    std::cout << "arr3: " << arr3 << std::endl;
+    Matrix<double> my_mat(2, 5);
+    std::cout << my_mat << std::endl;
+    Matrix<double> mat(4, 1, 3.1415);
+    std::cout << mat;
     return 0;
 }

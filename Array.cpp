@@ -90,7 +90,7 @@ size_t Array<T>::size() const{
 }
 
 //Not const methods
-template<class T> void Array<T>::push_back(T val){
+template<class T> void Array<T>::push_back(const T val){
     if (size_ < allocated_){
         data_[size_] = val;
         size_++;
