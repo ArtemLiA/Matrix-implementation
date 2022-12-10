@@ -149,12 +149,25 @@ template<class T> Array<T>& Array<T>::operator=(const Array<T> &other) {
 //Friend operators overloading
 template<class T>
 std::ostream& operator<<(std::ostream& os, const Array<T>& arr){
-    os << " ";
     for (size_t idx = 0; idx < arr.size_; idx++){
         os << arr.data_[idx] << " ";
     }
     return os;
 }
+
+template<class T>
+Array<T>& Array<T>::operator=(Array<T> &&other) noexcept{
+    if (this == &other){
+        return *this;
+    }
+    data_ = other.data_;
+    allocated_ = other.allocated_;
+    size_ = other.size_;
+    other.data_ = nullptr;
+    other.allocated_ = 0;
+    other.allocated_ = 0;
+}
+
 
 
 
