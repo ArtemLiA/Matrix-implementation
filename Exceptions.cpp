@@ -1,6 +1,5 @@
-//
-// Created by lyaho on 04.12.2022.
-//
+//Artem Liakhov
+
 #ifndef MATRIX_EXCEPTIONS
 #define MATRIX_EXCEPTIONS
 

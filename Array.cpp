@@ -1,6 +1,5 @@
-//
-// Created by lyaho on 04.12.2022.
-//
+//Artem Liakhov
+
 #ifndef MATRIX_ARRAY_CPP
 #define MATRIX_ARRAY_CPP
 #include "Array.h"
