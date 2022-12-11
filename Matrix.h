@@ -5,6 +5,9 @@
 #ifndef MATRIX_MATRIX_H
 #define MATRIX_MATRIX_H
 #include "Array.h"
+#include <exception>
+
+
 template<class T>
 class Matrix {
     template<class U>
@@ -16,7 +19,14 @@ public:
 public:
     explicit Matrix(size_t m_rows, size_t n_col = 1, T elems = T());
     Matrix(const Matrix<T>& other);
+    template<class U> explicit Matrix(const Matrix<U>& other);
+    template<class U> Matrix(std::initializer_list<U> list);
+    template<class U> Matrix(std::initializer_list<std::initializer_list<U>> list);
     Matrix(Matrix<T>&& other) noexcept;
+    //Const methods
+    T at(int i, int j) const;
+    //Operators overloading
+    T& operator ()(int i, int j);
 };
 
 #include "Matrix.cpp"
