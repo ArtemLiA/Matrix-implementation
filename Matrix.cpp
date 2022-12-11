@@ -86,7 +86,7 @@ Matrix<T>::Matrix(std::initializer_list<std::initializer_list<U>> list){
     auto iter = list.begin();
     while (iter != list.end()) {
         if (iter->size() != list.begin()->size()) {
-            throw std::out_of_range("bad sizes");
+            throw std::out_of_range("list size inconsistencies");
         }
         ++iter;
     }
@@ -112,6 +112,31 @@ T& Matrix<T>::operator()(int i, int j) {
         throw std::out_of_range("index j outside Matrix");
     }
     return mat_[i][j];
+}
+
+template<class T>
+Matrix<T>& Matrix<T>::operator=(const Matrix<T>& other){
+    if (this == &other){
+        return *this;
+    }
+    mat_ = other.mat_;
+    rows_ = other.rows_;
+    columns_ = other.columns_;
+    return *this;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator+(const Matrix<T>& other){
+    if (rows_ != other.rows_ || columns_ != other.columns_){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> result(rows_, columns_);
+    for (size_t i = 0; i < rows_; i++){
+        for (size_t j = 0; j < columns_; j++){
+            result(i, j) = this->at(i, j) + other.at(i, j);
+        }
+    }
+    return result;
 }
 
 

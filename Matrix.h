@@ -5,7 +5,6 @@
 #ifndef MATRIX_MATRIX_H
 #define MATRIX_MATRIX_H
 #include "Array.h"
-#include <exception>
 
 
 template<class T>
@@ -27,10 +26,11 @@ public:
     T at(int i, int j) const;
     //Operators overloading
     Matrix<T>& operator=(const Matrix<T>& other);
-    Matrix<T>& operator+(const Matrix<T>& other);
+    Matrix<T> operator+(const Matrix<T>& other);
+    Matrix<T> operator*(const Matrix<T>& other);
+
     T& operator ()(int i, int j);
 };
 
 #include "Matrix.cpp"
-
 #endif //MATRIX_MATRIX_H
