@@ -4,6 +4,7 @@
 #define MATRIX_MATRIX_CPP
 #include "Matrix.h"
 #include <iostream>
+#include <iterator>
 
 template<class T>
 Matrix<T>::Matrix(size_t m_rows, size_t n_col, T elems) {
@@ -80,19 +81,25 @@ T Matrix<T>::at(int i, int j) const {
 }
 
 template<class T> template<class U>
-Matrix<T>::Matrix(std::initializer_list<std::initializer_list<U>> list) {
+Matrix<T>::Matrix(std::initializer_list<std::initializer_list<U>> list){
+    //Check sizes
+    auto iter = list.begin();
+    while (iter != list.end()) {
+        if (iter->size() != list.begin()->size()) {
+            throw std::out_of_range("bad sizes");
+        }
+        ++iter;
+    }
     Array<T> buffer_list;
-    rows_ = 0;
-    columns_ = 0;
     for (auto lst: list){
         for (auto val: lst){
             buffer_list.push_back(static_cast<T>(val));
         }
         mat_.push_back(buffer_list);
         buffer_list.resize(0);
-        rows_++;
     }
-    columns_ = mat_.at(0).size();
+    rows_ = list.size();
+    columns_ = list.begin()->size();
 }
 
 //Operators overloading

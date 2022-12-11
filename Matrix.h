@@ -26,6 +26,8 @@ public:
     //Const methods
     T at(int i, int j) const;
     //Operators overloading
+    Matrix<T>& operator=(const Matrix<T>& other);
+    Matrix<T>& operator+(const Matrix<T>& other);
     T& operator ()(int i, int j);
 };
 

@@ -9,10 +9,10 @@
 #include <vector>
 
 int main(){
-    Matrix<double> my_mat = {{1.2, 2.2, 2.4}, {3.5, 5.6, 7.8}, {1.0, 2.0, 3.2}};
+    Matrix<double> my_mat = {{1.2, 2.2, 2.4}, {3.5, 5.6, 4.8}, {1.0, 2.0, 3.5}};
     std::cout << my_mat;
-    Matrix<double>new_mat(my_mat);
-    new_mat(0, 0) = 3.1415;
+    Matrix<int>new_mat(my_mat);
+    new_mat(0, 0) = 3;
     std::cout << std::endl << "New Matrix:\n" << new_mat;
     return 0;
 }
