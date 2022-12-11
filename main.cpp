@@ -9,13 +9,7 @@
 #include <vector>
 
 int main(){
-    Matrix<double> my_mat = {{1.2, 2.2, 2.5}, {3.5, 5.6, 4.8}, {1.0, 2.0, 3.5}};
-    std::cout << my_mat;
-    Matrix<int>new_mat(my_mat);
-    std::cout << std::endl << "New Matrix:\n" << new_mat;
-    new_mat(0, 0) = 3;
-    Matrix<int> mat2(1, 2, 3);
-    mat2 = new_mat;
-    std::cout << std::endl << "Matrix sum:\n" << new_mat + mat2;
+    Matrix<float> mat1 = {-1.1, -2.2, 3.3};
+    std::cout << mat1 - (float)2.0 * mat1 << std::endl;
     return 0;
 }

@@ -11,7 +11,16 @@ template<class T>
 class Matrix {
     template<class U>
     friend std::ostream& operator<<(std::ostream& os, const Matrix<U>& arr);
-public:
+
+    template<class U>
+    friend Matrix<U> operator*(const Matrix<U>& mat, U val);
+
+    template<class U>
+    friend Matrix<U> operator*(U val, const Matrix<U>& mat);
+
+    template<class U>
+    friend Matrix<U> operator-(const Matrix<U>& left, const Matrix<U>& right);
+protected:
     Array<Array<T>> mat_;
     size_t rows_;
     size_t columns_;
@@ -24,7 +33,8 @@ public:
     Matrix(Matrix<T>&& other) noexcept;
     //Const methods
     T at(int i, int j) const;
-    //Operators overloading
+    Matrix<T> transpose();
+    //Operators overloading (same type)
     Matrix<T>& operator=(const Matrix<T>& other);
     Matrix<T> operator+(const Matrix<T>& other);
     Matrix<T> operator*(const Matrix<T>& other);
@@ -33,4 +43,5 @@ public:
 };
 
 #include "Matrix.cpp"
+
 #endif //MATRIX_MATRIX_H

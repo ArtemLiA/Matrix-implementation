@@ -1,7 +1,7 @@
 //Liakhov Artem
-
 #ifndef MATRIX_MATRIX_CPP
 #define MATRIX_MATRIX_CPP
+
 #include "Matrix.h"
 #include <iostream>
 #include <iterator>
@@ -139,6 +139,56 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T>& other){
     return result;
 }
 
+template<class T>
+Matrix<T> Matrix<T>::operator*(const Matrix<T>& other){
+    if (columns_ != other.rows_){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> result(rows_, other.columns_);
+    for (size_t i = 0; i < result.rows_; i++){
+        for (size_t j = 0; j < result.columns_; j++){
+            for (size_t k = 0; k < this->columns_; k++){
+                result(i,j) += mat_.at(i).at(k) * other.at(k, j);
+            }
+        }
+    }
+    return result;
+}
 
+template<class T>
+Matrix<T> operator*(const Matrix<T>& mat, const T val) {
+    Matrix<T> result = mat;
+    for (size_t i = 0; i < result.rows_; i++){
+        for (size_t j = 0; j < result.columns_; j++){
+            result(i, j) *= val;
+        }
+    }
+    return result;
+}
+
+template<class T>
+Matrix<T> operator*(const T val, const Matrix<T>& mat){
+    Matrix<T> result = mat;
+    for (size_t i = 0; i < result.rows_; i++){
+        for (size_t j = 0; j < result.columns_; j++){
+            result(i, j) *= val;
+        }
+    }
+    return result;
+}
+
+template<class T>
+Matrix<T> operator-(const Matrix<T>& left, const Matrix<T>& right) {
+    if (left.rows_ != right.rows_ || left.columns_ != right.columns_){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> result(left.rows_, left.columns_);
+    for (size_t i = 0; i < left.rows_; i++){
+        for (size_t j = 0; j < left.columns_; j++){
+            result(i, j) = left.at(i, j) - right.at(i, j);
+        }
+    }
+    return result;
+}
 
 #endif
