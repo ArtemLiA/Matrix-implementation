@@ -37,16 +37,26 @@ Matrix<T>::Matrix(Matrix<T> &&other) noexcept {
 
 template<class T> template<class U>
 Matrix<T>::Matrix(const Matrix<U> &other) {
-    Array<T> buffer(other.columns_);
-    for (size_t i = 0; i < other.rows_; i++){
-        for (size_t j = 0; j < other.columns_; j++){
+    Array<T> buffer(other.columns());
+    for (size_t i = 0; i < other.rows(); i++){
+        for (size_t j = 0; j < other.columns(); j++){
             buffer.push_back(static_cast<T>(other.at(i, j)));
         }
         mat_.push_back(buffer);
         buffer.resize(0);
     }
-    rows_ = other.rows_;
-    columns_ = other.columns_;
+    rows_ = other.rows();
+    columns_ = other.columns();
+}
+
+template<class T>
+size_t Matrix<T>::rows() const noexcept{
+    return rows_;
+}
+
+template<class T>
+size_t Matrix<T>::columns() const noexcept{
+    return columns_;
 }
 
 template<class U>
@@ -186,6 +196,84 @@ Matrix<T> operator-(const Matrix<T>& left, const Matrix<T>& right) {
     for (size_t i = 0; i < left.rows_; i++){
         for (size_t j = 0; j < left.columns_; j++){
             result(i, j) = left.at(i, j) - right.at(i, j);
+        }
+    }
+    return result;
+}
+
+template<class T> template<class U>
+Matrix<T>& Matrix<T>::operator=(const Matrix<U>& other){
+    Matrix<T> buffer_mat(other.rows(), other.columns());
+    for (size_t i = 0; i < other.rows(); i++){
+        for (size_t j = 0; j < other.columns(); j++){
+            buffer_mat(i, j) = static_cast<T>(other.at(i, j));
+        }
+    }
+    (*this) = std::move(buffer_mat);
+    return *this;
+}
+
+template<class T> template<class U>
+Matrix<T> Matrix<T>::operator+(const Matrix<U> &other) {
+    if (rows_ != other.rows() || columns_ != other.columns()){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> result(rows_, columns_);
+    for (size_t i = 0; i < rows_; i++){
+        for (size_t j = 0; j < columns_; j++){
+            result(i, j) = this->at(i, j) + static_cast<T>(other.at(i, j));
+        }
+    }
+    return result;
+}
+
+template<class T> template<class U>
+Matrix<T> Matrix<T>::operator*(const Matrix<U> &other) {
+    if (columns_ != other.rows()){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> result(rows_, other.columns());
+    for (size_t i = 0; i < result.rows_; i++){
+        for (size_t j = 0; j < result.columns_; j++){
+            for (size_t k = 0; k < other.rows(); k++){
+                result(i,j) += mat_.at(i).at(k) * static_cast<T>(other.at(k, j));
+            }
+        }
+    }
+    return result;
+}
+
+template<class V, class U>
+Matrix<V> operator*(const Matrix<V>& mat, const U val){
+    Matrix<V> result = mat;
+    for (size_t i = 0; i < result.rows_; i++){
+        for (size_t j = 0; j < result.columns_; j++){
+            result(i, j) *= static_cast<V>(val);
+        }
+    }
+    return result;
+}
+
+template<class V, class U>
+Matrix<V> operator*(const U val, const Matrix<V>& mat){
+    Matrix<V> result = mat;
+    for (size_t i = 0; i < result.rows_; i++){
+        for (size_t j = 0; j < result.columns_; j++){
+            result(i, j) *= static_cast<V>(val);
+        }
+    }
+    return result;
+}
+
+template<class V, class U>
+Matrix<V> operator-(const Matrix<V>& left, const Matrix<U>& right){
+    if (left.rows() != right.rows() || left.columns() != right.columns()){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<V> result(left.rows(), left.columns());
+    for (size_t i = 0; i < left.rows(); i++){
+        for (size_t j = 0; j < left.columns(); j++){
+            result(i, j) = left.at(i, j) - static_cast<V>(right.at(i, j));
         }
     }
     return result;

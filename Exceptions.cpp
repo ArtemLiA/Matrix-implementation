@@ -3,8 +3,10 @@
 //
 #ifndef MATRIX_EXCEPTIONS
 #define MATRIX_EXCEPTIONS
+
 #include <exception>
 #include <iostream>
+
 
 class matrix_exception: public std::exception{
 public:
@@ -40,4 +42,4 @@ init_matrix_exception::init_matrix_exception(std::string message):matrix_excepti
 operations_matrix_exception::operations_matrix_exception(const char *message): matrix_exception(message){}
 operations_matrix_exception::operations_matrix_exception(std::string message):matrix_exception(std::move(message)){}
 
-#endif //MATRIX_EXCEPTIONS
+#endif
