@@ -279,4 +279,64 @@ Matrix<V> operator-(const Matrix<V>& left, const Matrix<U>& right){
     return result;
 }
 
+template<class T>
+Matrix<T>& Matrix<T>::operator+=(const Matrix<T>& other){
+    if (rows_ != other.rows_ || columns_ != other.columns_){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T>buffer = (*this) + other;
+    *this = std::move(buffer);
+    return *this;
+}
+
+template<class T>
+Matrix<T>& Matrix<T>::operator-=(const Matrix<T> &other) {
+    if (rows_ != other.rows_ || columns_ != other.columns_){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T>buffer = (*this) - other;
+    *this = std::move(buffer);
+    return *this;
+}
+
+template<class T>
+Matrix<T>& Matrix<T>::operator*=(const Matrix<T> &other) {
+    if (columns_ != other.rows_ ){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> buffer = (*this) * other;
+    *this = std::move(buffer);
+    return *this;
+}
+
+template<class T> template<class U>
+Matrix<T>& Matrix<T>::operator+=(const Matrix<U>& other) {
+    if (rows_ != other.rows() || columns_ != other.columns()){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> buffer = (*this) + other;
+    *this = std::move(buffer);
+    return *this;
+}
+
+template<class T> template<class U>
+Matrix<T>& Matrix<T>::operator-=(const Matrix<U>& other){
+    if (rows_ != other.rows() || columns_ != other.columns()){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> buffer = (*this) - other;
+    *this = std::move(buffer);
+    return *this;
+}
+
+template<class T> template<class U>
+Matrix<T>& Matrix<T>::operator*=(const Matrix<U>& other){
+    if (columns_ != other.rows() ){
+        throw std::out_of_range("matrix size inconsistency");
+    }
+    Matrix<T> buffer = (*this)*other;
+    *this = std::move(buffer);
+    return *this;
+}
+
 #endif

@@ -52,10 +52,17 @@ public:
     Matrix<T>& operator=(const Matrix<T>& other);
     Matrix<T> operator+(const Matrix<T>& other);
     Matrix<T> operator*(const Matrix<T>& other);
+    Matrix<T>& operator+=(const Matrix<T>& other);
+    Matrix<T>& operator-=(const Matrix<T>& other);
+    Matrix<T>& operator*=(const Matrix<T>& other);
+
 
     template<class U> Matrix<T>& operator=(const Matrix<U>& other);
     template<class U> Matrix<T> operator+(const Matrix<U>& other);
     template<class U> Matrix<T> operator*(const Matrix<U>& other);
+    template<class U> Matrix<T>& operator+=(const Matrix<U>& other);
+    template<class U> Matrix<T>& operator-=(const Matrix<U>&other);
+    template<class U> Matrix<T>& operator*=(const Matrix<U>& other);
 
     T& operator ()(int i, int j);
 };
